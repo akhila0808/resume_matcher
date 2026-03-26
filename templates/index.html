@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Matcher</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #22c55e;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .result-card {
+            background: #1e293b;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .green { color: lightgreen; }
+        .orange { color: orange; }
+        .red { color: red; }
+    </style>
+</head>
+
+<body>
+
+    <h1>AI Resume Matcher</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Job Description:</label>
+        <textarea name="job_description" rows="6" required></textarea>
+
+        <label>Upload Resumes:</label>
+        <input type="file" name="resumes" multiple required>
+
+        <button type="submit">Check Match</button>
+    </form>
+
+    <hr>
+
+    {% if results %}
+        <h2>Results:</h2>
+
+        {% for resume in results %}
+            <div class="result-card">
+                <h3>{{ resume.name }} — {{ resume.score }}%</h3>
+
+                <p class="green">
+                    <b>Strengths:</b> 
+                    {{ resume.matched_skills | join(', ') }}
+                </p>
+
+                <p class="orange">
+                    <b>Skills to Add:</b> 
+                    {{ resume.missing_skills | join(', ') }}
+                </p>
+
+                <p class="red">
+                    <b>Skills to Remove:</b> 
+                    {{ resume.extra_skills | join(', ') }}
+                </p>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+</body>
+</html>
