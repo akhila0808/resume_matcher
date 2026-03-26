@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 # ✅ Absolute import (this will work now)
-from process import process_resumes
+from utils.process import process_resumes
 
 app = Flask(__name__)
 
